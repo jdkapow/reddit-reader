@@ -1,0 +1,32 @@
+
+.li {
+  margin:5px 0 5px 0;
+  list-style:none;
+  padding:0;
+  width:100%;
+}
+
+.item-container {
+  padding:5px 5px 5px 10px;
+  margin:0;
+}
+
+.item-container:hover {
+  background-color:lightgray;
+}
+
+.icon {
+  display:inline;
+  min-width:30px;
+  min-height:30px;
+  max-width: 30px;
+  vertical-align:middle;
+  border-radius:50%;
+}
+
+.subreddit-name {
+  display:inline;
+  vertical-align:middle;
+  margin:auto;
+  padding-left:1rem;
+}

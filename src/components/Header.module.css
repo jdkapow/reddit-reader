@@ -1,0 +1,31 @@
+.header-main {
+  background-color:rgb(211, 189, 233);
+  height: 3.7rem;
+  color:rgb(114, 20, 202);
+  text-align:left;
+  margin:0 0 .5rem 0;
+  display:flex;
+  justify-content:space-between;
+  width:100%;
+  z-index:10;
+  border-bottom:1px solid black;
+}
+
+.h1 {
+  font-family: 'Titan One', sans-serif;
+  color:rgb(114, 20, 202);
+  letter-spacing: .06rem;
+  font-weight: normal;
+  display:inline;
+}
+
+.h1-big {
+  font-size: 2.5rem;
+  padding: .5rem;
+  margin: 0;
+  text-decoration:underline;
+}
+
+.h1-small {
+  display:none;
+}
