@@ -7,3 +7,24 @@
   margin:.5rem 0 .5rem 0;
   padding:0 0 0 .5rem;
 }
+
+.prev, .next {
+  border-style:none;
+  background: none;
+  box-shadow: none;
+  cursor:pointer;
+  color: blue;
+}
+
+.prev {
+  margin-left:10px;
+}
+
+.next {
+  float:right;
+  margin-right:10px;
+}
+
+.prev:hover, .next:hover {
+  text-decoration:underline;
+}

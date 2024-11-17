@@ -1,6 +1,6 @@
 .app {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  background-color:rgba(211, 211, 211, 0.2);
+  background-color:rgba(211, 211, 211, 0.3);
   min-height:1000px;
 }
 
@@ -19,10 +19,10 @@
 .subreddit-container {
   background-color:white;
   display:inline-block;
-  width:20%;
+  max-width:30%;
   margin:0.5rem 0 0 1rem;
   padding:0;
-  box-shadow: 2px 2px 1px lightgray;
+  /* box-shadow: 2px 2px 1px lightgray; */
 }
 
 @keyframes App-logo-spin {

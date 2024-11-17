@@ -5,6 +5,7 @@ const initialState = {
   after: null,
   before: null,
   limit: 12,
+  count: 0,
   subreddits: [],
   selectedSubredditId: null,
   isLoading: false,
@@ -17,14 +18,23 @@ export const loadSubreddits = createAsyncThunk(
   "subreddits/getSubredditsList",
   async ({ limit, pageChange }, { getState }) => {
     const url = "https://www.reddit.com/subreddits.json"
-    const state = getState();
-    const queryLimit = limit || state.limit || initialState.limit;
-    const queryAfter = pageChange === "next" && state.after ? `%after=${state.after}` : "";
-    const queryBefore = pageChange === "prev" && state.before ? `%before=${state.before}` : "";
-    const query = "?limit=" + queryLimit + queryAfter + queryBefore;
+    const state = getState().subreddits;
+    limit = limit || state.limit || initialState.limit || 12;
+    let query = "?limit=" + limit;
+    let count = state.count;
+    if (pageChange === "next" && state.after !== null) {
+      count = count + limit;
+      query = query + '&after=' + state.after + '&count=' + count;
+    };
+    if (pageChange === "prev" && state.before !== null) {
+      const beforeCount = count + limit;
+      query = query + '&before=' + state.before + '&count=' + beforeCount;
+      count = count - limit;
+    };
+    console.log(url+query);
     const data = await fetch(url + query);
     const json = await data.json();
-    return {limit: queryLimit, json: json};
+    return {limit: limit, count: count, json: json};
   }
 );
 
@@ -34,6 +44,7 @@ const subredditsSlice = createSlice({
   reducers: {
     selectSubreddit: (state, action) => {
       state.selectedSubredditId = action.payload;
+      state.subreddits.forEach((subreddit) => (subreddit.isSelected = (subreddit.id === action.payload)));
     }
   },
   extraReducers: (builder) => {
@@ -43,7 +54,7 @@ const subredditsSlice = createSlice({
         state.hasError = false;
       })
       .addCase(loadSubreddits.fulfilled, (state, action) => {
-        const { limit, json } = action.payload;
+        const { limit, count, json } = action.payload;
         //the json response should always be wrapped in a 'listing' object
         //which contains 'kind' (which we don't care about) and 'data'
         //before and after are used to move to the next or previous page listing of subreddits
@@ -52,6 +63,7 @@ const subredditsSlice = createSlice({
         state.isLoading = false;
         state.hasError = false; 
         state.limit = limit;
+        state.count = count;
         state.after = after;
         state.before = before;
         let colorCount = -1
