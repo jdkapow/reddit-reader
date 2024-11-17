@@ -11,7 +11,7 @@ export default function Subreddit({subreddit}) {
 
   const listStyleValue = isSelected ? 
     {backgroundColor: backColor,
-      width:"150%"
+      width:"120%"
     } :
     {backgroundColor: backColor,
       width:"100%"
@@ -27,8 +27,7 @@ export default function Subreddit({subreddit}) {
     {};
 
   const handleClick = () => {
-    console.log('got here!');
-    dispatch(selectSubreddit(id));
+    dispatch(selectSubreddit({id:id, subreddit:subreddit}));
   };
   
   return (

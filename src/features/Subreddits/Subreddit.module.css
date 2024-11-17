@@ -4,11 +4,13 @@
   list-style:none;
   padding:0;
   transition: all 1s;
+  z-index:20;
 }
 
 .hover-container {
   margin:0;
   padding:5px 20px 5px 10px;
+  z-index:20;
 }
 
 .hover-container:hover {

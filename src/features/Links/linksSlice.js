@@ -5,22 +5,21 @@ const initialState = {
   before: null,
   limit: 12,
   count: 0,
-  subreddits: [],
-  selectedSubreddit: {},
+  links: [],
+  selectedLink: {},
   isLoading: false,
   hasError: false
 };
 
-const iconColors = ["#0066CC","#175DB9","#2E53A7","#464A94","#5D4182","#74386F",
-                    "#8B2E5D","#A2254A","#B91C38","#D11325","#E80913","#FF0000"];
-const backColors = ["#8FBDE8","#99B9E0","#A3B5D8","#AEB0D0","#B8ACC8","#C2A8C0",
-                    "#CCA4B7","#D6A0AF","#E09CA7","#EB979F","#F59397","#FF8F8F"];
+//if we haven't selected a subreddit or performed a search,
+//just return the "reddit.com/top/.json" results
+const defaultLinkName = 'top';
 
-export const loadSubreddits = createAsyncThunk(
-  "subreddits/getSubredditsList",
-  async ({ limit, pageChange }, { getState }) => {
-    const url = "https://www.reddit.com/subreddits.json"
-    const state = getState().subreddits;
+export const loadLinks = createAsyncThunk(
+  "links/loadLinks",
+  async ({ limit, pageChange, subredditLinkName }, { getState }) => {
+    const url = "https://www.reddit.com/" + (subredditLinkName || defaultLinkName) + "/.json";
+    const state = getState().links;
     limit = limit || state.limit;
     let query = "?limit=" + limit;
     let count = state.count;
@@ -38,23 +37,23 @@ export const loadSubreddits = createAsyncThunk(
   }
 );
 
-const subredditsSlice = createSlice({
-  name: 'subreddits',
+const linksSlice = createSlice({
+  name: 'links',
   initialState: initialState,
   reducers: {
-    selectSubreddit: (state, action) => {
-      const { id, subreddit } = action.payload;
-      state.selectedSubreddit = subreddit;
-      state.subreddits.forEach((subreddit) => (subreddit.isSelected = (subreddit.id === id)));
+    selectLink: (state, action) => {
+      const { id, link } = action.payload;
+      state.selectedLink = link;
+      state.links.forEach((link) => (link.isSelected = (link.id === id)));
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loadSubreddits.pending, (state) => {
+      .addCase(loadLinks.pending, (state) => {
         state.isLoading = true;
         state.hasError = false;
       })
-      .addCase(loadSubreddits.fulfilled, (state, action) => {
+      .addCase(loadLinks.fulfilled, (state, action) => {
         const { limit, count, json } = action.payload;
         //the json response should always be wrapped in a 'listing' object
         //which contains 'kind' (which we don't care about) and 'data'
@@ -67,28 +66,23 @@ const subredditsSlice = createSlice({
         state.count = count;
         state.after = after;
         state.before = before;
-        let colorCount = -1
         //using the "name" property of a thing as the id, serves as unique id and needed for 'prev' and 'next'
         //also just saving the "data" part of the subreddit
-        state.subreddits = children.map((subreddit) => {
-          colorCount++;
+        state.links = children.map((link) => {
           return {
-          id: subreddit.data.name,
-          linkName: subreddit.data.display_name_prefixed,
-          isSelected: (subreddit.data.name === state.selectedSubreddit.id), 
-          iconColor: iconColors[colorCount],
-          backColor: backColors[colorCount],
-          data: subreddit.data
+          id: link.data.name, 
+          isSelected: (link.data.name === state.selectedLink.id), 
+          data: link.data
         }});
       })
-      .addCase(loadSubreddits.rejected, (state) => {
+      .addCase(loadLinks.rejected, (state) => {
         state.isLoading = false;
         state.hasError = true;
       });
   }
 });
 
-export const selectSubreddits = (state) => state.subreddits;
-export const selectedSubreddit = (state) => state.subreddits.selectedSubreddit;
-export const { selectSubreddit } = subredditsSlice.actions;
-export default subredditsSlice.reducer;
+export const selectLinks = (state) => state.links;
+export const selectedLink = (state) => state.links.selectedLink;
+export const { selectLink } = linksSlice.actions;
+export default linksSlice.reducer;

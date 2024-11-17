@@ -9,7 +9,7 @@
   color: #61dafb;
 }
 
-.body {
+.main {
   width:100%;
   display:inline-block;
   margin:0;
@@ -19,7 +19,7 @@
 .subreddit-container {
   background-color:white;
   display:inline-block;
-  max-width:30%;
+  width:240px;
   margin:0.5rem 0 0 1rem;
   padding:0;
   box-shadow: 2px 2px 1px lightgray;
