@@ -12,7 +12,10 @@ const initialState = {
   hasError: false
 };
 
-const backColors = ["#0066CC","#175DB9","#2E53A7","#464A94","#5D4182","#74386F","#8B2E5D","#A2254A","#B91C38","#D11325","#E80913","#FF0000"];
+const iconColors = ["#0066CC","#175DB9","#2E53A7","#464A94","#5D4182","#74386F",
+                    "#8B2E5D","#A2254A","#B91C38","#D11325","#E80913","#FF0000"];
+const backColors = ["#8FBDE8","#99B9E0","#A3B5D8","#AEB0D0","#B8ACC8","#C2A8C0",
+                    "#CCA4B7","#D6A0AF","#E09CA7","#EB979F","#F59397","#FF8F8F"];
 
 export const loadSubreddits = createAsyncThunk(
   "subreddits/getSubredditsList",
@@ -27,8 +30,7 @@ export const loadSubreddits = createAsyncThunk(
       query = query + '&after=' + state.after + '&count=' + count;
     };
     if (pageChange === "prev" && state.before !== null) {
-      const beforeCount = count + limit;
-      query = query + '&before=' + state.before + '&count=' + beforeCount;
+      query = query + '&before=' + state.before + '&count=' + count;
       count = count - limit;
     };
     console.log(url+query);
@@ -74,6 +76,7 @@ const subredditsSlice = createSlice({
           return {
           id: subreddit.data.name, 
           isSelected: (subreddit.id === state.selectedSubredditId), 
+          iconColor: iconColors[colorCount],
           backColor: backColors[colorCount],
           data: subreddit.data
         }});

@@ -5,26 +5,25 @@ import { selectSubreddit } from "./subredditsSlice";
 
 export default function Subreddit({subreddit}) {
   const dispatch = useDispatch();
-  const { id, isSelected, backColor, data } = subreddit;
-  const defaultBackColor = backColor + "15";
-  const selectedBackColor = backColor + "40";
-  const borderStyle = "2px solid " + backColor;
+  const { id, isSelected, backColor, iconColor, data } = subreddit;
+  const defaultBackColor = backColor + "50";
+  const borderStyle = "2px solid " + iconColor;
 
   const listStyleValue = isSelected ? 
-    {backgroundColor: selectedBackColor,
+    {backgroundColor: backColor,
       width:"150%"
     } :
-    {backgroundColor: defaultBackColor,
+    {backgroundColor: backColor,
       width:"100%"
     };
 
   const imgStyleValue = {
     border:borderStyle,
-    backgroundColor: backColor
+    backgroundColor: iconColor
   };
 
   const hoverContainerStyleValue = isSelected ?
-    {backgroundColor: selectedBackColor} :
+    {backgroundColor: backColor} :
     {};
 
   const handleClick = () => {

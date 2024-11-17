@@ -22,7 +22,7 @@
   max-width:30%;
   margin:0.5rem 0 0 1rem;
   padding:0;
-  /* box-shadow: 2px 2px 1px lightgray; */
+  box-shadow: 2px 2px 1px lightgray;
 }
 
 @keyframes App-logo-spin {
