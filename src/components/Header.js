@@ -1,5 +1,4 @@
 import styles from './Header.module.css';
-import redditManager from '../Utilities/redditManager';
 
 const Header = () => {
 

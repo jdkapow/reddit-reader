@@ -20,6 +20,10 @@
   text-wrap:wrap;
 }
 
+.selftext {
+  margin: 0 5%;
+}
+
 .post-info {
   width:90%;
   display:flex;

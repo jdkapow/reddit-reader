@@ -37,6 +37,10 @@
   margin-right:10px;
 }
 
+.prev:hover, .next:hover {
+  text-decoration: underline;
+}
+
 .links-list {
   margin:0;
   padding:0;

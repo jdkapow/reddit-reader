@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import styles from './App.module.css';
 import Header from '../components/Header';
 import Subreddits from '../features/Subreddits/Subreddits';
