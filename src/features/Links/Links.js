@@ -29,8 +29,8 @@ export default function Links () {
   
   const navSection = (
     <div className={styles["nav"]}>
-        <button className={styles["prev"]} id="prev" onClick={handleClick}>&lt;&lt; prev</button>
-        <button className={styles["next"]} id="next" onClick={handleClick}>next &gt;&gt;</button>
+        <button className={styles["prev"]} id="prev" style={!before ? {visibility:"hidden"} :{}} onClick={handleClick}>&lt;&lt; prev</button>
+        <button className={styles["next"]} id="next" style={!after ? {visibility:"hidden"} :{}} onClick={handleClick}>next &gt;&gt;</button>
     </div>
   );
 
@@ -40,7 +40,7 @@ export default function Links () {
       {navSection}
       <ul className={styles["links-list"]}>
         {links.map((link) => (
-          <Link key={link.data.id} link={link} titleColor={titleColor} />
+          <Link key={link.id} id={link.id} link={link} titleColor={titleColor} />
         ))}
       </ul>
       {navSection}

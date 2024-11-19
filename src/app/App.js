@@ -2,6 +2,7 @@ import styles from './App.module.css';
 import Header from '../components/Header';
 import Subreddits from '../features/Subreddits/Subreddits';
 import Links from '../features/Links/Links';
+import Comments from '../features/Comments/Comments';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadSubreddits } from '../features/Subreddits/subredditsSlice';
@@ -23,6 +24,7 @@ function App() {
           <Subreddits />
         </div>
         <Links />
+        <Comments />
       </main>
       <footer>
 

@@ -1,15 +1,16 @@
 import styles from './Link.module.css';
+import { useDispatch } from 'react-redux';
+import { selectLink } from './linksSlice'
 
-export default function Link ({link, titleColor}) {
+export default function Link ({link, id, titleColor}) {
+  const dispatch = useDispatch();
   const { title, selftext, url, author, num_comments, upvote_ratio, ups} = link.data;
 
   const downs = ups / upvote_ratio - ups;
   const net = Math.floor(ups - downs);
 
-  console.log(titleColor);
-
   const handleClick = () => {
-
+    dispatch(selectLink({id:id, link:link}));
   };
 
   return (

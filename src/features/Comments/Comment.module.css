@@ -1,0 +1,31 @@
+
+.comment-container {
+  width:95%;
+  padding:2.5%;
+  margin: .5rem auto;
+  background-color:whitesmoke;
+  box-shadow: 1px 1px gray;
+  font-size: 0.9rem;
+  overflow:clip;
+  border-radius: 5px;
+}
+
+.comment-info {
+  display: flex;
+  justify-content:space-between;
+}
+
+.author {
+  font-weight:bold;
+  color:darkblue;
+}
+
+.created {
+  font-style:italic;
+  color:gray;
+}
+
+.body {
+  padding:0 1rem;
+  overflow:clip;
+}

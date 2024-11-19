@@ -43,7 +43,7 @@ const linksSlice = createSlice({
   reducers: {
     selectLink: (state, action) => {
       const { id, link } = action.payload;
-      state.selectedLink = link;
+      state.selectedLink = {...link, isSelected: true};
       state.links.forEach((link) => (link.isSelected = (link.id === id)));
     }
   },
@@ -58,7 +58,7 @@ const linksSlice = createSlice({
         //the json response should always be wrapped in a 'listing' object
         //which contains 'kind' (which we don't care about) and 'data'
         //before and after are used to move to the next or previous page listing of subreddits
-        //all the objects in json.data.children should be subreddits, so we can just pass the children object to state
+        //all the objects in json.data.children should be links, so we can just pass the children object to state
         const { after, before, children } = json.data;
         state.isLoading = false;
         state.hasError = false; 
@@ -67,7 +67,7 @@ const linksSlice = createSlice({
         state.after = after;
         state.before = before;
         //using the "name" property of a thing as the id, serves as unique id and needed for 'prev' and 'next'
-        //also just saving the "data" part of the subreddit
+        //also just saving the "data" part of the link
         state.links = children.map((link) => {
           return {
           id: link.data.name, 

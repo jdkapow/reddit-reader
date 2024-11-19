@@ -3,8 +3,8 @@
 .link-container {
   display: inline-block;
   margin: 0.5rem 0 .5rem 2rem;
-  min-width: 30%;
-  max-width:50%;
+  min-width: 20%;
+  max-width: 40%;
   min-height: 649px;
   background-color: white;
   vertical-align:top;

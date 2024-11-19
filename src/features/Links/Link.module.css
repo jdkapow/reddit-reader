@@ -5,6 +5,8 @@
   padding:0;
   border: 2px solid black;
   border-radius:10px;
+  overflow:clip;
+  
 }
 
 .post-image {
@@ -22,6 +24,7 @@
 
 .selftext {
   margin: 0 5%;
+  overflow:clip;
 }
 
 .post-info {
