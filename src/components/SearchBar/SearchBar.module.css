@@ -1,0 +1,18 @@
+
+form {
+  display:flex;
+  flex-direction:column;
+  margin:auto 0;
+}
+
+.searchbar {
+  font-size:1.2rem;
+}
+
+.search-button, .clear-button {
+  font-size:1.2rem;
+}
+
+.radio-label {
+  font-size:1.2rem;
+}

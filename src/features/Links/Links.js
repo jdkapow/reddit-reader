@@ -8,10 +8,10 @@ import PanelNav from '../../components/PanelNav/PanelNav';
 
 export default function Links () {
   const dispatch = useDispatch();
-  const {limit, before, after, links} = useSelector(selectLinks);
+  const {limit, before, after, links, searchTerm} = useSelector(selectLinks);
 
   const activeSubreddit = useSelector(selectedSubreddit);
-  const subredditLinkName = activeSubreddit.linkName || "";
+  const subredditLinkName = activeSubreddit.linkName;
   const headerText = !activeSubreddit.data ? "Top Reddit Posts" : "Posts in " + activeSubreddit.data.display_name_prefixed
 
   const containerBackColor = (!activeSubreddit.backColor) ? 
@@ -20,12 +20,14 @@ export default function Links () {
 
   const titleColor = (!activeSubreddit.iconColor) ? "black" : activeSubreddit.iconColor;
 
-  useEffect( () => {
-    dispatch(loadLinks({limit:null, pageChange:null, subredditLinkName:subredditLinkName}));
-  },[activeSubreddit]);
+  useEffect(() => {
+    dispatch(loadLinks({limit:null, pageChange:null, 
+                        subredditLinkName:subredditLinkName, searchTerm:searchTerm}));
+  }, [searchTerm, activeSubreddit]);
 
   const handleClick = (e) => {
-    dispatch(loadLinks({limit:limit, pageChange:e.target.id, subredditLinkName:subredditLinkName}));
+    dispatch(loadLinks({limit:limit, pageChange:e.target.id, 
+                        subredditLinkName:subredditLinkName, searchTerm:searchTerm}));
   };
   
   return (

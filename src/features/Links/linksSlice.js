@@ -7,6 +7,7 @@ const initialState = {
   count: 0,
   links: [],
   selectedLink: {},
+  searchTerm: "",
   isLoading: false,
   hasError: false
 };
@@ -17,23 +18,43 @@ const defaultLinkName = 'top';
 
 export const loadLinks = createAsyncThunk(
   "links/loadLinks",
-  async ({ limit, pageChange, subredditLinkName }, { getState }) => {
-    const url = "https://www.reddit.com/" + (subredditLinkName || defaultLinkName) + "/.json";
+  async ({ searchTerm, limit, pageChange, subredditLinkName }, { getState }) => {
+    let url;
     const state = getState().links;
-    limit = limit || state.limit;
-    let query = "?limit=" + limit;
+    //need to figure out what kind of search we're doing
+    //if it's a new subreddit link name, we clear out the search and just load it
+    //if it's a new search term, we clear out selected subreddit and just do the search
+    //if search term and subreddit name are blank/undefined, we just load reddit's top posts
+    if (searchTerm === "" || subredditLinkName !== state.selectedLink.linkName) {
+      url = "https://www.reddit.com/" + (subredditLinkName || defaultLinkName) + "/.json";
+      searchTerm = "";
+    } else {
+      url = "https://www.reddit.com/search.json"
+    };
+    console.log(state.searchTerm);
     let count = state.count;
+    if (searchTerm !== state.searchTerm) {
+      count = 0;
+      pageChange = "";
+    };
+    console.log("got to point 3");
+    limit = limit || state.limit;
+    const searchQuery = "q=" + searchTerm;
+    const limitQuery = "limit=" + limit;
+    let pageChangeQuery = "";
     if (pageChange === "next" && state.after !== null) {
       count = count + limit;
-      query = query + '&after=' + state.after + '&count=' + count;
+      pageChangeQuery = 'after=' + state.after + '&count=' + count;
     };
     if (pageChange === "prev" && state.before !== null) {
-      query = query + '&before=' + state.before + '&count=' + count;
+      pageChangeQuery = 'before=' + state.before + '&count=' + count;
       count = count - limit;
     };
+    const query = "?" + (searchTerm !== "" ? searchQuery + "&" : "") + limitQuery + (pageChangeQuery !== "" ? "&" + pageChangeQuery : "") ;
+    console.log("Links query: " + query);
     const data = await fetch(url + query);
     const json = await data.json();
-    return {limit: limit, count: count, json: json};
+    return {searchTerm: searchTerm, limit: limit, count: count, json: json};
   }
 );
 
@@ -45,6 +66,9 @@ const linksSlice = createSlice({
       const { id, link } = action.payload;
       state.selectedLink = {...link, isSelected: true};
       state.links.forEach((link) => (link.isSelected = (link.id === id)));
+    },
+    conductLinkSearch: (state, action) => {
+      state.searchTerm = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -54,7 +78,7 @@ const linksSlice = createSlice({
         state.hasError = false;
       })
       .addCase(loadLinks.fulfilled, (state, action) => {
-        const { limit, count, json } = action.payload;
+        const { searchTerm, limit, count, json } = action.payload;
         //the json response should always be wrapped in a 'listing' object
         //which contains 'kind' (which we don't care about) and 'data'
         //before and after are used to move to the next or previous page listing of subreddits
@@ -62,6 +86,8 @@ const linksSlice = createSlice({
         const { after, before, children } = json.data;
         state.isLoading = false;
         state.hasError = false; 
+        console.log("Search term: " + searchTerm);
+        state.searchTerm = searchTerm;
         state.limit = limit;
         state.count = count;
         state.after = after;
@@ -84,5 +110,6 @@ const linksSlice = createSlice({
 
 export const selectLinks = (state) => state.links;
 export const selectedLink = (state) => state.links.selectedLink;
-export const { selectLink } = linksSlice.actions;
+export const selectSearchTerm = (state) => state.links.searchTerm;
+export const { selectLink, conductLinkSearch } = linksSlice.actions;
 export default linksSlice.reducer;

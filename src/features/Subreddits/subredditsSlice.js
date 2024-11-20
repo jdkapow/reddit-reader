@@ -7,6 +7,7 @@ const initialState = {
   count: 0,
   subreddits: [],
   selectedSubreddit: {},
+  searchTerm: "",
   isLoading: false,
   hasError: false
 };
@@ -18,20 +19,32 @@ const backColors = ["#8FBDE8","#99B9E0","#A3B5D8","#AEB0D0","#B8ACC8","#C2A8C0",
 
 export const loadSubreddits = createAsyncThunk(
   "subreddits/getSubredditsList",
-  async ({ limit, pageChange }, { getState }) => {
-    const url = "https://www.reddit.com/subreddits.json"
+  async ({ searchTerm, limit, pageChange }, { getState }) => {
+    let url;
     const state = getState().subreddits;
+    if (searchTerm === "") {
+      url = "https://www.reddit.com/subreddits.json"
+    } else {
+      url = "https://www.reddit.com/subreddits/search.json"
+    }
+    if (searchTerm !== state.searchTerm) {
+      state.count = 0;
+      pageChange = "";
+    }
     limit = limit || state.limit;
-    let query = "?limit=" + limit;
+    const searchQuery = "q=" + searchTerm;
+    const limitQuery = "limit=" + limit;
     let count = state.count;
+    let pageChangeQuery = "";
     if (pageChange === "next" && state.after !== null) {
       count = count + limit;
-      query = query + '&after=' + state.after + '&count=' + count;
+      pageChangeQuery = 'after=' + state.after + '&count=' + count;
     };
     if (pageChange === "prev" && state.before !== null) {
-      query = query + '&before=' + state.before + '&count=' + count;
+      pageChangeQuery = 'before=' + state.before + '&count=' + count;
       count = count - limit;
     };
+    const query = "?" + (searchTerm !== "" ? searchQuery + "&" : "") + limitQuery + (pageChangeQuery !== "" ? "&" + pageChangeQuery : "") ;
     const data = await fetch(url + query);
     const json = await data.json();
     return {limit: limit, count: count, json: json};
@@ -46,6 +59,9 @@ const subredditsSlice = createSlice({
       const { id, subreddit } = action.payload;
       state.selectedSubreddit = subreddit;
       state.subreddits.forEach((subreddit) => (subreddit.isSelected = (subreddit.id === id)));
+    },
+    conductSubredditSearch: (state, action) => {
+      state.searchTerm = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -90,5 +106,5 @@ const subredditsSlice = createSlice({
 
 export const selectSubreddits = (state) => state.subreddits;
 export const selectedSubreddit = (state) => state.subreddits.selectedSubreddit;
-export const { selectSubreddit } = subredditsSlice.actions;
+export const { selectSubreddit, conductSubredditSearch } = subredditsSlice.actions;
 export default subredditsSlice.reducer;

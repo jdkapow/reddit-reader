@@ -12,7 +12,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect( () => {
-    dispatch(loadSubreddits({limit:getSubredditLimit(), pageChange:null}));
+    dispatch(loadSubreddits({searchTerm:"", limit:getSubredditLimit(), pageChange:null}));
   },[]);
 
   return (
@@ -27,7 +27,7 @@ function App() {
         <div className="LinksBlock">
           <Links />
         </div>
-        <div classname="CommentsBlock">
+        <div className="CommentsBlock">
           <Comments />
         </div>
       </main>

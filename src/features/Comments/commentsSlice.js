@@ -26,13 +26,7 @@ export const loadComments = createAsyncThunk(
 const commentsSlice = createSlice({
   name: 'comments',
   initialState: initialState,
-  /*reducers: {
-    selectLink: (state, action) => {
-      const { id, link } = action.payload;
-      state.selectedLink = link;
-      state.links.forEach((link) => (link.isSelected = (link.id === id)));
-    }
-  },*/
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(loadComments.pending, (state) => {
@@ -76,6 +70,4 @@ const commentsSlice = createSlice({
 });
 
 export const selectComments = (state) => state.comments;
-//export const selectedLink = (state) => state.links.selectedLink;
-//export const { selectLink } = linksSlice.actions;
 export default commentsSlice.reducer;
