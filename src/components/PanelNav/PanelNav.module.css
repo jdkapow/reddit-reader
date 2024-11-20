@@ -1,0 +1,24 @@
+.nav {
+  display:flex;
+  justify-content:space-between;
+}
+
+.prev, .next {
+  cursor:pointer;
+  background-color:white;
+  color: blue;
+  border:1px solid black;
+  border-radius: 5px;
+}
+
+.prev {
+  margin-left: 0.5rem;
+}
+
+.next {
+  margin-right: 0.5rem;
+}
+
+.prev:hover, .next:hover {
+  background-color:whitesmoke;
+}

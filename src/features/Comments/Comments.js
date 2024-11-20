@@ -25,12 +25,14 @@ export default function Links () {
   };
   
   return (
-    <div className={styles["comments-container"]}>
-      <h2 className={styles["h2"]}>Comments</h2>
-      <Link link={selectedPost} id={selectedPost.id} titleColor="black"/>
-      {comments.map((comment) => (
-        <Comment key={comment.id} comment={comment} />
-      ))}
+    <div className="PanelContainer">
+      <h2 className="PanelTitle">Comments</h2>
+      <div className={`PanelList ${styles["comment-list"]}`}>
+        <Link link={selectedPost} id={selectedPost.id} titleColor="black"/>
+        {comments.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
+        ))}
+      </div>
     </div>
   );
 };

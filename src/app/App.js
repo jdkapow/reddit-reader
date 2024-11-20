@@ -1,5 +1,6 @@
-import styles from './App.module.css';
-import Header from '../components/Header';
+import './App.css';
+import { getSubredditLimit } from '../utilities/util';
+import Header from '../components/Header/Header';
 import Subreddits from '../features/Subreddits/Subreddits';
 import Links from '../features/Links/Links';
 import Comments from '../features/Comments/Comments';
@@ -11,20 +12,24 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect( () => {
-    dispatch(loadSubreddits({limit:null, pageChange:null}));
+    dispatch(loadSubreddits({limit:getSubredditLimit(), pageChange:null}));
   },[]);
 
   return (
-    <div className={styles['app']}>
-      <header>
+    <div className="App">
+      <header className="Header">
         <Header />
       </header>
-      <main className={styles["main"]}>
-        <div className={styles["subreddit-container"]}>
+      <main className="Main">
+        <div className="SubredditsBlock">
           <Subreddits />
         </div>
-        <Links />
-        <Comments />
+        <div className="LinksBlock">
+          <Links />
+        </div>
+        <div classname="CommentsBlock">
+          <Comments />
+        </div>
       </main>
       <footer>
 

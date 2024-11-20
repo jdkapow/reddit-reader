@@ -1,0 +1,55 @@
+.App {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.Header {
+  z-index: 100;
+}
+
+.Main {
+  display:grid;
+  grid-template-columns: 295px minmax(0,1fr) minmax(0,1fr);
+  justify-content:center;
+  margin:0;
+  padding:0;
+  position:relative;
+  top: 3.8rem;
+  background-color:lightgray;
+  z-index:1;
+}
+
+.SubredditsBlock {
+  grid-column: 1;
+}
+
+.LinksBlock {
+  grid-column: 2;
+  z-index:20;
+}
+
+.CommentsBlock {
+  grid-column: 3;
+}
+
+.PanelContainer {
+  background-color:white;
+  padding:0;
+  transition: all 1s;
+  margin:1rem;
+  transition: all 1s;
+  box-shadow:2px 2px gray;
+  border-radius:10px;
+  overflow:0;
+  min-width:0;
+  z-index:1;
+}
+
+.PanelTitle {
+  margin:0;
+  padding:.5rem;
+}
+
+.PanelList {
+  margin: 0.5rem;
+  padding:0;
+}

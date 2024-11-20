@@ -3,11 +3,15 @@
   width:95%;
   padding:2.5%;
   margin: .5rem auto;
-  background-color:whitesmoke;
+  background-color:white;
   box-shadow: 1px 1px gray;
   font-size: 0.9rem;
   overflow:clip;
   border-radius: 5px;
+}
+
+.comment-container:hover {
+  background-color:whitesmoke;
 }
 
 .comment-info {

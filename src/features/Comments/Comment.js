@@ -12,8 +12,6 @@ export default function Comment ({ comment }) {
   if (createdAgo < 86400) {
     createdText = `${Math.floor(createdAgo / 3600)} hours ago`; } 
   else {createdText = `${Math.floor(createdAgo / 86400)} days ago`; }
-  
-
 
   return (
     <div className={styles["comment-container"]}>

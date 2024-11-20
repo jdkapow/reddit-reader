@@ -11,7 +11,7 @@ export default function Subreddit({subreddit}) {
 
   const listStyleValue = isSelected ? 
     {backgroundColor: backColor,
-      width:"120%"
+      width:"150%"
     } :
     {backgroundColor: backColor,
       width:"100%"

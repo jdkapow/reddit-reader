@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectLinks, loadLinks } from './linksSlice';
 import { selectedSubreddit } from '../Subreddits/subredditsSlice';
 import Link from './Link';
+import PanelNav from '../../components/PanelNav/PanelNav';
 
 export default function Links () {
   const dispatch = useDispatch();
@@ -27,23 +28,16 @@ export default function Links () {
     dispatch(loadLinks({limit:limit, pageChange:e.target.id, subredditLinkName:subredditLinkName}));
   };
   
-  const navSection = (
-    <div className={styles["nav"]}>
-        <button className={styles["prev"]} id="prev" style={!before ? {visibility:"hidden"} :{}} onClick={handleClick}>&lt;&lt; prev</button>
-        <button className={styles["next"]} id="next" style={!after ? {visibility:"hidden"} :{}} onClick={handleClick}>next &gt;&gt;</button>
-    </div>
-  );
-
   return (
-    <div className={styles["link-container"]} style={containerBackColor}>
-      <h2 className={styles["h2"]}>{headerText}</h2>
-      {navSection}
-      <ul className={styles["links-list"]}>
+    <div className="PanelContainer" style={containerBackColor}>
+      <h2 className="PanelTitle">{headerText}</h2>
+      <PanelNav before={before} after={after} onClickHandler={handleClick} />
+      <ul className="PanelList">
         {links.map((link) => (
           <Link key={link.id} id={link.id} link={link} titleColor={titleColor} />
         ))}
       </ul>
-      {navSection}
+      <PanelNav before={before} after={after} onClickHandler={handleClick} />
       <br/>
     </div>
   )
