@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { conductLinkSearch } from "../Links/linksSlice";
 
 const initialState = {
   after: null,
@@ -61,7 +62,11 @@ const subredditsSlice = createSlice({
       state.subreddits.forEach((subreddit) => (subreddit.isSelected = (subreddit.id === id)));
     },
     conductSubredditSearch: (state, action) => {
-      state.searchTerm = action.payload;
+      const { searchTerm, searchType } = action.payload;
+      state.searchTerm = searchTerm;
+      if (searchType === "both") {
+        state.selectedSubreddit = {};
+      };
     }
   },
   extraReducers: (builder) => {
@@ -100,7 +105,13 @@ const subredditsSlice = createSlice({
       .addCase(loadSubreddits.rejected, (state) => {
         state.isLoading = false;
         state.hasError = true;
-      });
+      })
+      .addCase(conductLinkSearch, (state) => {
+        console.log('got here!')
+        //when we conduct a new link search, we deselect subreddits)
+        state.selectedSubreddit = {};
+        state.subreddits.forEach((subreddit) => (subreddit.isSelected = false));
+      })
   }
 });
 

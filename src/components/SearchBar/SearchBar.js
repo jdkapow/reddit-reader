@@ -14,15 +14,11 @@ const SearchBar = () => {
   const activeSubredditName = useSelector(selectedSubreddit).linkName;
 
   //Setting up the react-select component
-  const standardSelectOptions = [
+  const selectOptions = [
     {value: 'posts', label: 'All Posts'},
     {value: 'subreddits', label: 'Subreddits'},
     {value: 'both', label: 'Subreddits & Posts'}
   ];
-  const activeSelectOption = !activeSubredditName ?
-    [] :
-    [{value: 'active', label: activeSubredditName}];
-  const selectOptions = activeSelectOption.concat(standardSelectOptions);
   const selectStyles = {
     control: (baseStyles, state) => ({
       ...baseStyles,
@@ -51,12 +47,6 @@ const SearchBar = () => {
     })
   };
 
-  useEffect(() => {
-    if (activeSubredditName) {
-      setOption(selectOptions[0]);
-    };
-  }, [activeSubredditName]);
-
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
   }
@@ -70,23 +60,25 @@ const SearchBar = () => {
     //we reach this when the user presses Search or hits enter
     if (searchTerm !== "") {
       const {value} = option;
-      console.log(value);
       if (value === "subreddits" || value === "both") {
-        dispatch(conductSubredditSearch(searchTerm));
+        //if we search subreddits, we need to know whether we're also 
+        //searching posts: if we are, we need to sever the selected subreddit
+        dispatch(conductSubredditSearch({searchTerm:searchTerm, searchType:value}));
       }
       if (value === "posts" || value === "both") {
-        dispatch(conductLinkSearch({searchTerm:searchTerm, searchType:"global"}));
-      }
-      if (value === "active") {
-        dispatch(conductLinkSearch({searchTerm:searchTerm, searchType:"local"}));
+        console.log(searchTerm);
+        dispatch(conductLinkSearch(searchTerm));
       }
     }
   };
 
   const clearSearch = () => {
-    setSearchTerm("");
-    dispatch(conductSubredditSearch(""));
-    dispatch(conductLinkSearch(""));
+    if(searchTerm !== "") {
+      setSearchTerm("");
+      dispatch(conductSubredditSearch({searchTerm:"", searchType:"both"}));
+      dispatch(conductLinkSearch(""));
+      setOption({value: 'both', label:'Subreddits & Posts'});
+    };
   }
 
   return (

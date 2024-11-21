@@ -6,9 +6,9 @@ const initialState = {
   limit: 12,
   count: 0,
   links: [],
+  selectedSubreddit: {},
   selectedLink: {},
   searchTerm: "",
-  searchType: "global",
   isLoading: false,
   hasError: false
 };
@@ -64,11 +64,11 @@ const linksSlice = createSlice({
       const { id, link } = action.payload;
       state.selectedLink = {...link, isSelected: true};
       state.links.forEach((link) => (link.isSelected = (link.id === id)));
+      //clears search
+      state.searchTerm = "";
     },
     conductLinkSearch: (state, action) => {
-      const {searchTerm, searchType} = action.payload;
-      state.searchTerm = searchTerm;
-      state.searchType = searchType;
+      state.searchTerm = action.payload;
     }
   },
   extraReducers: (builder) => {
