@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
   after: null,
   before: null,
-  limit: 12,
+  limit: 6,
   count: 0,
   subreddits: [],
   selectedSubreddit: {},

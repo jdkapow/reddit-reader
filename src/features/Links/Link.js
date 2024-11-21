@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styles from './Link.module.css';
 import { useDispatch } from 'react-redux';
 import { selectLink } from './linksSlice'
@@ -5,18 +6,25 @@ import { selectLink } from './linksSlice'
 export default function Link ({link, id, titleColor}) {
   const dispatch = useDispatch();
   const { title, selftext, url, author, num_comments, upvote_ratio, ups} = link.data;
+  const [imageDisplay, setImageDisplay] = useState(url);
 
   const downs = ups / upvote_ratio - ups;
   const net = Math.floor(ups - downs);
+
 
   const handleClick = () => {
     dispatch(selectLink({id:id, link:link}));
   };
 
+  const handleError = () => {
+    setImageDisplay(null);
+  }
+
+
   return (
     <div className={styles["link-container"]}>
       <h3 className={styles["title"]} style={{color:titleColor}}>{title}</h3>
-      <img className={styles["post-image"]} src={url} alt="" />
+      <img className={styles["post-image"]} src={imageDisplay} onError={handleError} style={imageDisplay ? {} : {display:"none"}} />
       <p className={styles["selftext"]}>{selftext}</p>
       <div className={styles["post-info"]}>
         <p className={styles["author"]} style={{color:titleColor}}>Posted by: {author}</p>

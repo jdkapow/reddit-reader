@@ -8,6 +8,7 @@ const initialState = {
   links: [],
   selectedLink: {},
   searchTerm: "",
+  searchType: "global",
   isLoading: false,
   hasError: false
 };
@@ -31,13 +32,11 @@ export const loadLinks = createAsyncThunk(
     } else {
       url = "https://www.reddit.com/search.json"
     };
-    console.log(state.searchTerm);
     let count = state.count;
     if (searchTerm !== state.searchTerm) {
       count = 0;
       pageChange = "";
     };
-    console.log("got to point 3");
     limit = limit || state.limit;
     const searchQuery = "q=" + searchTerm;
     const limitQuery = "limit=" + limit;
@@ -51,7 +50,6 @@ export const loadLinks = createAsyncThunk(
       count = count - limit;
     };
     const query = "?" + (searchTerm !== "" ? searchQuery + "&" : "") + limitQuery + (pageChangeQuery !== "" ? "&" + pageChangeQuery : "") ;
-    console.log("Links query: " + query);
     const data = await fetch(url + query);
     const json = await data.json();
     return {searchTerm: searchTerm, limit: limit, count: count, json: json};
@@ -68,7 +66,9 @@ const linksSlice = createSlice({
       state.links.forEach((link) => (link.isSelected = (link.id === id)));
     },
     conductLinkSearch: (state, action) => {
-      state.searchTerm = action.payload;
+      const {searchTerm, searchType} = action.payload;
+      state.searchTerm = searchTerm;
+      state.searchType = searchType;
     }
   },
   extraReducers: (builder) => {
@@ -86,7 +86,6 @@ const linksSlice = createSlice({
         const { after, before, children } = json.data;
         state.isLoading = false;
         state.hasError = false; 
-        console.log("Search term: " + searchTerm);
         state.searchTerm = searchTerm;
         state.limit = limit;
         state.count = count;

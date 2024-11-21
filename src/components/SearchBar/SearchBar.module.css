@@ -1,18 +1,68 @@
 
-form {
+.form-container {
   display:flex;
-  flex-direction:column;
-  margin:auto 0;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  height:100%;
+  align-items:center;
+}
+
+.dropdown-container {
+  flex-grow:0;
+  min-width:11rem;
+}
+
+.dropdown {
+  width:90%;
+  height:1rem;
+  border:1px solid black;
+}
+
+.checkbox {
+  accent-color:rgb(114, 20, 202);
+  margin: 5px 0;
+}
+
+.checkbox-label {
+  font-size:.8rem;
+  margin-left:5px;
+}
+
+.searchbar-container {
+  flex-grow:1;
+  max-width:50%;
+  height:100%;
 }
 
 .searchbar {
-  font-size:1.2rem;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color:rgb(114, 20, 202);
+  font-size:1.1rem;
+  width:100%;
+  border:1px solid black;
+}
+
+.searchbar::placeholder {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color:rgb(114, 20, 202);
+}
+
+.button-container {
+  flex-grow:0;
 }
 
 .search-button, .clear-button {
-  font-size:1.2rem;
+  height:1.5rem;
+  border:none;
+  background-color:rgb(211, 189, 233);
+  cursor:pointer;
 }
 
-.radio-label {
-  font-size:1.2rem;
+.search-button {
+  margin-left:.5rem;
+}
+
+img {
+  height:100%;
 }

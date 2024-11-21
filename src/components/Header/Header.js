@@ -10,7 +10,9 @@ const Header = () => {
       <div className={styles["jgt-logo"]}>
         <h1 className={`${styles["h1-big"]} ${styles["h1"]}`}>Jim's Giant Reddit Reader</h1>
       </div>
-      <SearchBar />
+      <div className={styles["searchbar-container"]}>
+        <SearchBar />
+      </div>
     </div>
   )
 }
