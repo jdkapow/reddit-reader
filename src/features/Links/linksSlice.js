@@ -6,7 +6,6 @@ const initialState = {
   limit: 12,
   count: 0,
   links: [],
-  selectedSubreddit: {},
   selectedLink: {},
   searchTerm: "",
   isLoading: false,

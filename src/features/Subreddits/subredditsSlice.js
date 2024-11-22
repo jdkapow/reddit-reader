@@ -7,7 +7,7 @@ const initialState = {
   limit: 6,
   count: 0,
   subreddits: [],
-  selectedSubreddit: {},
+  activeSubreddit: {},
   searchTerm: "",
   isLoading: false,
   hasError: false
@@ -56,16 +56,16 @@ const subredditsSlice = createSlice({
   name: 'subreddits',
   initialState: initialState,
   reducers: {
-    selectSubreddit: (state, action) => {
+    activateSubreddit: (state, action) => {
       const { id, subreddit } = action.payload;
-      state.selectedSubreddit = subreddit;
-      state.subreddits.forEach((subreddit) => (subreddit.isSelected = (subreddit.id === id)));
+      state.activeSubreddit = subreddit;
+      state.subreddits.forEach((subreddit) => (subreddit.isActive = (subreddit.id === id)));
     },
     conductSubredditSearch: (state, action) => {
       const { searchTerm, searchType } = action.payload;
       state.searchTerm = searchTerm;
       if (searchType === "both") {
-        state.selectedSubreddit = {};
+        state.activeSubreddit = {};
       };
     }
   },
@@ -96,7 +96,7 @@ const subredditsSlice = createSlice({
           return {
           id: subreddit.data.name,
           linkName: subreddit.data.display_name_prefixed,
-          isSelected: (subreddit.data.name === state.selectedSubreddit.id), 
+          isActive: (subreddit.data.name === state.activeSubreddit.id), 
           iconColor: iconColors[colorCount],
           backColor: backColors[colorCount],
           data: subreddit.data
@@ -109,13 +109,12 @@ const subredditsSlice = createSlice({
       .addCase(conductLinkSearch, (state) => {
         console.log('got here!')
         //when we conduct a new link search, we deselect subreddits)
-        state.selectedSubreddit = {};
-        state.subreddits.forEach((subreddit) => (subreddit.isSelected = false));
+        state.activeSubreddit = {};
+        state.subreddits.forEach((subreddit) => (subreddit.isActive = false));
       })
   }
 });
 
 export const selectSubreddits = (state) => state.subreddits;
-export const selectedSubreddit = (state) => state.subreddits.selectedSubreddit;
-export const { selectSubreddit, conductSubredditSearch } = subredditsSlice.actions;
+export const { activateSubreddit, conductSubredditSearch } = subredditsSlice.actions;
 export default subredditsSlice.reducer;

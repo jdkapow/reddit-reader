@@ -20,6 +20,7 @@
   margin:1rem 1rem 0 1rem;
   padding-bottom: 0.2rem;
   text-wrap:wrap;
+  cursor:pointer;
 }
 
 .selftext {
@@ -34,6 +35,11 @@
   justify-content:space-between
 }
 
+.vote-icon {
+  height:1rem;
+  margin-right:5px;
+}
+
 .comment-button {
   border-style:none;
   background: none;
@@ -42,6 +48,7 @@
   color: blue;
 }
 
-.comment-button:hover {
-  text-decoration: underline;
+.comment-icon {
+  height:1rem;
+  margin-right:5px;
 }

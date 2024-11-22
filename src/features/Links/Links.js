@@ -2,17 +2,21 @@ import React, { useEffect } from 'react';
 import styles from './Links.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectLinks, loadLinks } from './linksSlice';
-import { selectedSubreddit } from '../Subreddits/subredditsSlice';
+import { selectSubreddits } from '../Subreddits/subredditsSlice';
 import Link from './Link';
 import PanelNav from '../../components/PanelNav/PanelNav';
 
 export default function Links () {
   const dispatch = useDispatch();
   const {limit, before, after, links, searchTerm} = useSelector(selectLinks);
+  const {activeSubreddit} = useSelector(selectSubreddits);
 
-  const activeSubreddit = useSelector(selectedSubreddit);
   const subredditLinkName = activeSubreddit.linkName;
-  const headerText = !activeSubreddit.data ? "Top Reddit Posts" : "Posts in " + activeSubreddit.data.display_name_prefixed
+  const headerText = !(activeSubreddit.data || searchTerm)
+    ? "Top Reddit Posts" :
+    !searchTerm
+    ? "Posts in " + activeSubreddit.data.display_name_prefixed
+    : `Posts: "${searchTerm}"`;
 
   const containerBackColor = (!activeSubreddit.backColor) ? 
     {backgroundColor:"white"} :

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import styles from './SearchBar.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { conductSubredditSearch, selectedSubreddit } from '../../features/Subreddits/subredditsSlice';
+import { useDispatch } from 'react-redux';
+import { conductSubredditSearch } from '../../features/Subreddits/subredditsSlice';
 import { conductLinkSearch } from '../../features/Links/linksSlice';
 import magnifier from './magnifier.png';
 import cancel from './cancel.png';
@@ -11,7 +11,6 @@ const SearchBar = () => {
   const dispatch = useDispatch();
   const [ searchTerm, setSearchTerm ] = useState("");
   const [ option, setOption ] = useState({value: 'both', label:'Subreddits & Posts'});
-  const activeSubredditName = useSelector(selectedSubreddit).linkName;
 
   //Setting up the react-select component
   const selectOptions = [

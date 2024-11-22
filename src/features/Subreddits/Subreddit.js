@@ -1,15 +1,15 @@
 import React from "react";
 import styles from './Subreddit.module.css';
 import { useDispatch } from 'react-redux';
-import { selectSubreddit } from "./subredditsSlice";
+import { activateSubreddit } from "./subredditsSlice";
+import cancel from './cancel.png';
 
 export default function Subreddit({subreddit}) {
   const dispatch = useDispatch();
-  const { id, isSelected, backColor, iconColor, data } = subreddit;
-  const defaultBackColor = backColor + "50";
+  const { id, isActive, backColor, iconColor, data } = subreddit;
   const borderStyle = "2px solid " + iconColor;
 
-  const listStyleValue = isSelected ? 
+  const listStyleValue = isActive ? 
     {backgroundColor: backColor,
       width:"150%"
     } :
@@ -22,19 +22,26 @@ export default function Subreddit({subreddit}) {
     backgroundColor: iconColor
   };
 
-  const hoverContainerStyleValue = isSelected ?
+  const hoverContainerStyleValue = isActive ?
     {backgroundColor: backColor} :
     {};
 
-  const handleClick = () => {
-    dispatch(selectSubreddit({id:id, subreddit:subreddit}));
+  const handleActivateSubreddit = () => {
+    if (!isActive) {
+      dispatch(activateSubreddit({id:id, subreddit:subreddit}));
+    }
+  };
+
+  const handleDeactivateSubreddit = () => {
+    dispatch(activateSubreddit({id:'', subreddit:{}}))
   };
   
   return (
-    <li key={id} className={styles["li"]} style={listStyleValue} onClick={handleClick}>
+    <li key={id} className={styles["li"]} style={listStyleValue} onClick={handleActivateSubreddit}>
       <div className={styles['hover-container']} style={hoverContainerStyleValue}>
         <img className={styles["icon"]} style={imgStyleValue} src={data.icon_img} alt="" />
         <span className={styles["subreddit-name"]}>{data["display_name"]}</span>
+        {isActive ? <button onClick={handleDeactivateSubreddit} className={styles["cancel-button"]}><img src={cancel} alt="X"></img></button> : <></>}
       </div>
     </li>
   );

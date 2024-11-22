@@ -28,8 +28,8 @@ export default function Subreddits() {
   const titleStyle = (titleText === "Subreddits") ? {} : {fontSize:"1.2rem"};
 
   useEffect(() => {
-    dispatch(loadSubreddits({searchTerm:searchTerm, limit:null, pageChange:0}));
-  }, [searchTerm]);
+   dispatch(loadSubreddits({searchTerm:searchTerm, limit:null, pageChange:0}));
+  }, [searchTerm, dispatch]);
     
   useEffect(() => {
     const debouncedUpdateLimit = debounce(() => {
