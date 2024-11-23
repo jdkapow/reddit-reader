@@ -66,8 +66,15 @@ const linksSlice = createSlice({
       //clears search
       state.searchTerm = "";
     },
+    clearSelectedLink: (state) => {
+      state.selectedLink = {};
+      state.links.forEach((link) => (link.isSelected = false));
+    },
     conductLinkSearch: (state, action) => {
       state.searchTerm = action.payload;
+    },
+    clearLinkSearch: (state) => {
+      state.searchTerm = "";
     }
   },
   extraReducers: (builder) => {
@@ -109,5 +116,5 @@ const linksSlice = createSlice({
 export const selectLinks = (state) => state.links;
 export const selectedLink = (state) => state.links.selectedLink;
 export const selectSearchTerm = (state) => state.links.searchTerm;
-export const { selectLink, conductLinkSearch } = linksSlice.actions;
+export const { selectLink, clearSelectedLink, conductLinkSearch, clearLinkSearch } = linksSlice.actions;
 export default linksSlice.reducer;

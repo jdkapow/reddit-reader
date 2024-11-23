@@ -8,7 +8,7 @@
 
 .Main {
   display:grid;
-  grid-template-columns: 295px minmax(0,1fr) minmax(0,1fr);
+  grid-template-columns: 295px minmax(0,1fr);
   justify-content:center;
   margin:0;
   padding:0;
@@ -29,7 +29,8 @@
 }
 
 .CommentsBlock {
-  grid-column: 3;
+  grid-column: 2;
+  z-index:20;
 }
 
 .PanelContainer {

@@ -61,12 +61,19 @@ const subredditsSlice = createSlice({
       state.activeSubreddit = subreddit;
       state.subreddits.forEach((subreddit) => (subreddit.isActive = (subreddit.id === id)));
     },
+    clearActiveSubreddit: (state) => {
+      state.activeSubreddit={};
+      state.subreddits.forEach((subreddit) => (subreddit.isActive = false));
+    },
     conductSubredditSearch: (state, action) => {
       const { searchTerm, searchType } = action.payload;
       state.searchTerm = searchTerm;
       if (searchType === "both") {
         state.activeSubreddit = {};
       };
+    },
+    clearSubredditSearch: (state) => {
+      state.searchTerm="";
     }
   },
   extraReducers: (builder) => {
@@ -99,15 +106,16 @@ const subredditsSlice = createSlice({
           isActive: (subreddit.data.name === state.activeSubreddit.id), 
           iconColor: iconColors[colorCount],
           backColor: backColors[colorCount],
+          isPrivate: (subreddit.data.subreddit_type === "private"),
           data: subreddit.data
         }});
       })
       .addCase(loadSubreddits.rejected, (state) => {
+        console.log('got here');
         state.isLoading = false;
         state.hasError = true;
       })
       .addCase(conductLinkSearch, (state) => {
-        console.log('got here!')
         //when we conduct a new link search, we deselect subreddits)
         state.activeSubreddit = {};
         state.subreddits.forEach((subreddit) => (subreddit.isActive = false));
@@ -116,5 +124,5 @@ const subredditsSlice = createSlice({
 });
 
 export const selectSubreddits = (state) => state.subreddits;
-export const { activateSubreddit, conductSubredditSearch } = subredditsSlice.actions;
+export const { activateSubreddit, clearActiveSubreddit, conductSubredditSearch, clearSubredditSearch } = subredditsSlice.actions;
 export default subredditsSlice.reducer;

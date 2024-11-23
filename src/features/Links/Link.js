@@ -18,6 +18,7 @@ export default function Link ({link, id, titleColor}) {
 
   const handleClick = () => {
     dispatch(selectLink({id:id, link:link}));
+    window.scrollTo({top:0,left:0,behavior:"smooth"});
   };
 
   const handleError = () => {

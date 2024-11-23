@@ -1,4 +1,16 @@
+.panel-container {
+  max-width:1000px;
+}
 
-.comment-list {
-  margin-top:1.75rem;
+.return-button {
+  margin-left:10px;
+  color:red;
+  border: 1px solid red;
+  padding-top:2px;
+  background-color:white;
+  border-radius:5px;
+}
+
+.return-button:hover {
+  background-color:whitesmoke;
 }

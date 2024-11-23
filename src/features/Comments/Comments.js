@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import styles from './Comments.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadComments, selectComments } from './commentsSlice';
-import { selectedLink } from '../Links/linksSlice';
+import { selectedLink, clearSelectedLink } from '../Links/linksSlice';
 import Link from '../Links/Link';
 import Comment from './Comment';
 
-export default function Links () {
+export default function Comments ({activeSubreddit}) {
   const dispatch = useDispatch();
   const commentsData = useSelector(selectComments);
   const selectedPost = useSelector(selectedLink);
@@ -18,6 +18,12 @@ export default function Links () {
     };
   },[selectedPost]);
 
+  const containerBackColor = (!activeSubreddit.backColor) ? "white" :activeSubreddit.backColor;
+  
+  const handleReturnClick = () => {
+    dispatch(clearSelectedLink());
+  };
+
   if (!selectedPost.data) {
     return (
       <></>
@@ -25,8 +31,9 @@ export default function Links () {
   };
   
   return (
-    <div className="PanelContainer">
+    <div className={`PanelContainer ${styles["panel-container"]}`} style={{backgroundColor:containerBackColor}}>
       <h2 className="PanelTitle">Comments</h2>
+      <button className={styles["return-button"]} onClick={handleReturnClick}>&lt;&lt; Return to Posts</button>
       <div className={`PanelList ${styles["comment-list"]}`}>
         <Link link={selectedPost} id={selectedPost.id} titleColor="black"/>
         {comments.map((comment) => (

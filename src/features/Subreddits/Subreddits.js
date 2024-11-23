@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import styles from './Subreddits.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectSubreddits, loadSubreddits } from './subredditsSlice';
+import { selectSubreddits, loadSubreddits, clearSubredditSearch } from './subredditsSlice';
 import Subreddit from './Subreddit';
-import PanelNav from '../../components/PanelNav/PanelNav'
+import PanelNav from '../../components/PanelNav/PanelNav';
 import { getSubredditLimit } from '../../utilities/util';
+import cancel from '../../icons/cancel.png';
 
 //helper function to keep from responding to resize so quickly
 function debounce(fn, ms) {
@@ -42,14 +43,25 @@ export default function Subreddits() {
     
   });
 
-  const handleClick = (e) => {
+  const handleNavClick = (e) => {
     dispatch(loadSubreddits({searchTerm:searchTerm, limit:null, pageChange:e.target.id}));
+  };
+
+  const handleClearSearchClick = () => {
+    dispatch(clearSubredditSearch());
   };
 
   return (
     <div className={`PanelContainer ${styles["subreddits-container"]}`} style={{height:panelHeight}}>
-      <h2 className="PanelTitle" style={titleStyle}>{titleText}</h2>
-      <PanelNav before={before} after={after} onClickHandler={handleClick} />
+      <div className={styles["header-container"]}>
+        <h2 className="PanelTitle" style={titleStyle}>{titleText}</h2>
+        <img className={styles["cancel-icon"]} 
+              src={cancel} alt="Cancel" 
+              style={!searchTerm ? {display:"none"} : {}}
+              onClick={handleClearSearchClick} 
+        />
+      </div>
+      <PanelNav before={before} after={after} onClickHandler={handleNavClick} />
       <ul className="PanelList">
         {subreddits.map((subreddit) => (
           <Subreddit key={subreddit.data.id} subreddit={subreddit} />

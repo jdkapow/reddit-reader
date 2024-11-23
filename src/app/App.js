@@ -5,11 +5,12 @@ import Subreddits from '../features/Subreddits/Subreddits';
 import Links from '../features/Links/Links';
 import Comments from '../features/Comments/Comments';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { loadSubreddits } from '../features/Subreddits/subredditsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadSubreddits, selectSubreddits } from '../features/Subreddits/subredditsSlice';
 
 function App() {
   const dispatch = useDispatch();
+  const {activeSubreddit} = useSelector(selectSubreddits);
 
   useEffect( () => {
     dispatch(loadSubreddits({searchTerm:"", limit:getSubredditLimit(), pageChange:null}));
@@ -25,10 +26,10 @@ function App() {
           <Subreddits />
         </div>
         <div className="LinksBlock">
-          <Links />
+          <Links activeSubreddit={activeSubreddit} />
         </div>
         <div className="CommentsBlock">
-          <Comments />
+          <Comments activeSubreddit={activeSubreddit}/>
         </div>
       </main>
       <footer>
