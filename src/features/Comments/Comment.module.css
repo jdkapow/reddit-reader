@@ -24,9 +24,8 @@
   color:darkblue;
 }
 
-.created {
-  font-style:italic;
-  color:gray;
+.created-text {
+  margin: 0;
 }
 
 .body {

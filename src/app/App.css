@@ -3,19 +3,21 @@
 }
 
 .Header {
+  background-color:rgb(211, 189, 233);
+  height: 3.7rem;
+  color:rgb(114, 20, 202);
+  width:100%;
+  border-bottom:1px solid black;
+  position:fixed;
   z-index: 100;
 }
 
 .Main {
   display:grid;
   grid-template-columns: 295px minmax(0,1fr);
-  justify-content:center;
-  margin:0;
-  padding:0;
   position:relative;
   top: 3.8rem;
   background-color:lightgray;
-  min-height:1000px;
   z-index:1;
 }
 
@@ -23,27 +25,18 @@
   grid-column: 1;
 }
 
-.LinksBlock {
-  grid-column: 2;
-  z-index:20;
-}
-
-.CommentsBlock {
+.LinksBlock, .CommentsBlock {
   grid-column: 2;
   z-index:20;
 }
 
 .PanelContainer {
   background-color:white;
-  padding:0;
   transition: all 1s;
   margin:1rem;
-  transition: all 1s;
   box-shadow:2px 2px gray;
   border-radius:10px;
-  overflow:0;
   min-width:0;
-  z-index:1;
 }
 
 .PanelTitle {
@@ -54,4 +47,10 @@
 .PanelList {
   margin: 0.5rem;
   padding:0;
+}
+
+.CreatedText {
+  font-style:italic;
+  color:gray;
+  margin:.5rem 0 1rem 1rem;
 }

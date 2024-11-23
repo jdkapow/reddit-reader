@@ -2,7 +2,7 @@ import React from "react";
 import styles from './Subreddit.module.css';
 import { useDispatch } from 'react-redux';
 import { activateSubreddit, clearActiveSubreddit } from "./subredditsSlice";
-import cancel from './cancel.png';
+import cancel from '../../icons/cancel.png';
 
 export default function Subreddit({subreddit}) {
   const dispatch = useDispatch();

@@ -4,8 +4,8 @@ import styles from './SearchBar.module.css';
 import { useDispatch } from 'react-redux';
 import { conductSubredditSearch } from '../../features/Subreddits/subredditsSlice';
 import { conductLinkSearch } from '../../features/Links/linksSlice';
-import magnifier from './magnifier.png';
-import cancel from './cancel.png';
+import magnifier from '../../icons/magnifier.png'
+import cancel from '../../icons/cancel.png';
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -30,6 +30,10 @@ const SearchBar = () => {
       marginRight:"1rem",
       paddingLeft:"5px",
       background: "white"
+    }),
+    valueContainer: (baseStyles, state) => ({
+      ...baseStyles,
+      fontSize:"1rem"
     }),
     menu: (baseStyles, state) => ({
       ...baseStyles,
