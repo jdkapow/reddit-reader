@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import styles from './Subreddits.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSubreddits, loadSubreddits, clearSubredditSearch } from './subredditsSlice';
+import SubredditsLarge from './Subreddits-large';
+import SubredditsSmall from './Subreddits-small';
 import Subreddit from './Subreddit';
 import PanelNav from '../../components/PanelNav/PanelNav';
 import { getSubredditLimit } from '../../utilities/util';
@@ -20,18 +22,15 @@ function debounce(fn, ms) {
 };
 
 export default function Subreddits() {
-  const { limit, before, after, subreddits, searchTerm } = useSelector(selectSubreddits);
+  const { limit, before, after, subreddits, searchTerm, activeSubreddit } = useSelector(selectSubreddits);
   const dispatch = useDispatch();
 
   const panelHeight = (limit - 1) * 49 + 120;
-  const displaySearchTerm = (searchTerm.length < 13) ? searchTerm : searchTerm.slice(0, 12) + "...";
-  const titleText = (searchTerm === "") ? "Subreddits" : `Subreddits: "${displaySearchTerm}"`;
-  const titleStyle = (titleText === "Subreddits") ? {} : {fontSize:"1.2rem"};
 
   useEffect(() => {
    dispatch(loadSubreddits({searchTerm:searchTerm, limit:null, pageChange:0}));
   }, [searchTerm, dispatch]);
-    
+  
   useEffect(() => {
     const debouncedUpdateLimit = debounce(() => {
       dispatch(loadSubreddits({searchTerm: searchTerm, limit:getSubredditLimit(), pageChange:null}));
@@ -43,30 +42,43 @@ export default function Subreddits() {
     
   });
 
+  const handleMoreSelect = () => {
+    dispatch(loadSubreddits({searchTerm:searchTerm, limit:null, pageChange:"next"}));
+  }
+        
   const handleNavClick = (e) => {
     dispatch(loadSubreddits({searchTerm:searchTerm, limit:null, pageChange:e.target.id}));
   };
 
-  const handleClearSearchClick = () => {
+  const handleClearSearch = () => {
     dispatch(clearSubredditSearch());
   };
 
   return (
-    <div className={`PanelContainer ${styles["subreddits-container"]}`} style={{height:panelHeight}}>
-      <div className={styles["header-container"]}>
-        <h2 className="PanelTitle" style={titleStyle}>{titleText}</h2>
-        <img className={styles["cancel-icon"]} 
-              src={cancel} alt="Cancel" 
-              style={!searchTerm ? {display:"none"} : {}}
-              onClick={handleClearSearchClick} 
-        />
-      </div>
-      <PanelNav before={before} after={after} onClickHandler={handleNavClick} />
-      <ul className="PanelList">
-        {subreddits.map((subreddit) => (
-          <Subreddit key={subreddit.data.id} subreddit={subreddit} />
-        ))}
-      </ul>
+    <div>
+      <SubredditsLarge 
+        className={styles["subreddits-large"]}
+        panelHeight={panelHeight}
+        cancel={cancel} 
+        searchTerm={searchTerm}
+        before={before}
+        after={after} 
+        subreddits={subreddits} 
+        onClearSearchHandler={handleClearSearch}
+        onNavHandler={handleNavClick}
+      />
+      <SubredditsSmall 
+        className={styles["subreddits-small"]}
+        panelHeight={panelHeight}
+        cancel={cancel} 
+        searchTerm={searchTerm}
+        before={before}
+        after={after} 
+        subreddits={subreddits}
+        activeSubreddit={activeSubreddit}
+        onClearSearchHandler={handleClearSearch}
+        onMoreHandler={handleMoreSelect}
+      />
     </div>
   )
 }

@@ -11,11 +11,12 @@ export default function Links ({activeSubreddit}) {
   const {limit, before, after, links, searchTerm, selectedLink} = useSelector(selectLinks);
 
   const subredditLinkName = activeSubreddit.linkName;
+  const displaySearchTerm = (searchTerm.length < 28) ? searchTerm : searchTerm.slice(0, 27) + "...";
   const headerText = !(activeSubreddit.data || searchTerm)
     ? "Top Reddit Posts" :
     !searchTerm
     ? "Posts in " + activeSubreddit.data.display_name_prefixed
-    : `Posts: "${searchTerm}"`;
+    : `Posts: "${displaySearchTerm}"`;
 
   const containerBackColor = (!activeSubreddit.backColor) ? "white" :activeSubreddit.backColor;
   const titleColor = (!activeSubreddit.iconColor) ? "black" : activeSubreddit.iconColor;

@@ -10,23 +10,21 @@ import cancel from '../../icons/cancel.png';
 const SearchBar = () => {
   const dispatch = useDispatch();
   const [ searchTerm, setSearchTerm ] = useState("");
-  const [ option, setOption ] = useState({value: 'both', label:'Subreddits & Posts'});
+  const [ option, setOption ] = useState({value: 'both', label:'All'});
 
   //Setting up the react-select component
   const selectOptions = [
-    {value: 'posts', label: 'All Posts'},
+    {value: 'posts', label: 'Posts'},
     {value: 'subreddits', label: 'Subreddits'},
-    {value: 'both', label: 'Subreddits & Posts'}
+    {value: 'both', label: 'All'}
   ];
   const selectStyles = {
     control: (baseStyles, state) => ({
       ...baseStyles,
       border:"1px solid black",
-      minWidth:"15rem",
       fontSize:"1rem",
       minHeight:0,
-      minWidth:0,
-      width: "11rem",
+      minWidth:"7rem",
       marginRight:"1rem",
       paddingLeft:"5px",
       background: "white"
@@ -80,7 +78,7 @@ const SearchBar = () => {
       setSearchTerm("");
       dispatch(conductSubredditSearch({searchTerm:"", searchType:"both"}));
       dispatch(conductLinkSearch(""));
-      setOption({value: 'both', label:'Subreddits & Posts'});
+      setOption({value: 'both', label:'All'});
     };
   }
 

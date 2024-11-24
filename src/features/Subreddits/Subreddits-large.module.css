@@ -1,0 +1,22 @@
+.subreddits-container {
+  position:fixed;
+  width:270px;
+}
+
+.header-container {
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+}
+
+.cancel-icon {
+  height:1.2rem;
+  margin-right:5px;
+  cursor:pointer;
+}
+
+@media only screen and (max-width:650px) {
+  .subreddits-container {
+    display:none;
+  }
+}

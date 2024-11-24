@@ -1,5 +1,6 @@
 .App {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background-color:lightgray;
 }
 
 .Header {
@@ -9,6 +10,7 @@
   width:100%;
   border-bottom:1px solid black;
   position:fixed;
+  top:0;
   z-index: 100;
 }
 
@@ -17,7 +19,6 @@
   grid-template-columns: 295px minmax(0,1fr);
   position:relative;
   top: 3.8rem;
-  background-color:lightgray;
   z-index:1;
 }
 
@@ -53,4 +54,22 @@
   font-style:italic;
   color:gray;
   margin:.5rem 0 1rem 1rem;
+}
+
+@media only screen and (max-width:900px) {
+  .Main {
+    grid-template-columns: 275px minmax(0,1fr);
+  }
+
+  .PanelContainer {
+    margin:0.5rem;
+  }
+}
+
+@media only screen and (max-width:650px) {
+  .Main {
+    display:block;
+    margin:0;
+    padding:0;
+  }
 }
