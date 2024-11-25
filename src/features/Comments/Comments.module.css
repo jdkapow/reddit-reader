@@ -1,5 +1,6 @@
 .panel-container {
   max-width:1000px;
+  padding-bottom:1rem;
 }
 
 .return-button {
@@ -13,4 +14,11 @@
 
 .return-button:hover {
   background-color:whitesmoke;
+}
+
+.skeleton {
+  margin-bottom: .5rem;
+  background-color:whitesmoke;
+  box-shadow: 1px 1px gray;
+  height:5rem;
 }

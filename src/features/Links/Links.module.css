@@ -1,5 +1,6 @@
 .panel-container {
   max-width: 1000px;
+  min-height:100px;
 }
 
 .header-container {
@@ -12,4 +13,16 @@
   height:1.2rem;
   margin-right:5px;
   cursor:pointer;
+}
+
+.skeleton-container {
+  margin-top:.4rem;
+}
+
+.skeleton {
+  height:5rem;
+  width:98%;
+  margin: .5rem 0.5rem;
+  border: 2px solid black;
+  border-radius:10px;
 }

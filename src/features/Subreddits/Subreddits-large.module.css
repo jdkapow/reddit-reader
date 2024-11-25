@@ -9,6 +9,15 @@
   align-items:center;
 }
 
+.skeleton-container {
+  margin-top: .5rem;
+}
+
+.skeleton {
+  height:3rem;
+  margin-bottom:.2rem;
+}
+
 .cancel-icon {
   height:1.2rem;
   margin-right:5px;

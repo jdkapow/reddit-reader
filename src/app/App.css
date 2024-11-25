@@ -20,6 +20,7 @@
   position:relative;
   top: 3.8rem;
   z-index:1;
+  min-height:250px;
 }
 
 .SubredditsBlock {

@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import styles from './Comments.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadComments, selectComments } from './commentsSlice';
@@ -11,6 +13,7 @@ export default function Comments ({activeSubreddit}) {
   const commentsData = useSelector(selectComments);
   const selectedPost = useSelector(selectedLink);
   const comments = commentsData.comments;
+  const commentsLoading = commentsData.isLoading;
   
   useEffect( () => {
     if (!(!selectedPost.data)) {
@@ -36,7 +39,10 @@ export default function Comments ({activeSubreddit}) {
       <button className={styles["return-button"]} onClick={handleReturnClick}>&lt;&lt; Return to Posts</button>
       <div className={`PanelList ${styles["comment-list"]}`}>
         <Link link={selectedPost} id={selectedPost.id} titleColor="black"/>
-        {comments.map((comment) => (
+        {commentsLoading ? (
+          <Skeleton className={styles["skeleton"]} count={10} />
+        ) :
+        comments.map((comment) => (
           <Comment key={comment.id} comment={comment} />
         ))}
       </div>

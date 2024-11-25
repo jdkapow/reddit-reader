@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import styles from './Links.module.css';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectLinks, loadLinks, clearLinkSearch } from './linksSlice';
 import Link from './Link';
@@ -8,7 +10,7 @@ import cancel from '../../icons/cancel.png';
 
 export default function Links ({activeSubreddit}) {
   const dispatch = useDispatch();
-  const {limit, before, after, links, searchTerm, selectedLink} = useSelector(selectLinks);
+  const {limit, before, after, links, searchTerm, selectedLink, isLoading, hasError} = useSelector(selectLinks);
 
   const subredditLinkName = activeSubreddit.linkName;
   const displaySearchTerm = (searchTerm.length < 28) ? searchTerm : searchTerm.slice(0, 27) + "...";
@@ -33,6 +35,30 @@ export default function Links ({activeSubreddit}) {
 
   const handleClearSearchClick = () => {
     dispatch(clearLinkSearch());
+  }
+
+  if (isLoading) {
+    return (
+      <div className={`PanelContainer ${styles["panel-container"]}`}>
+        <div className={styles["header-container"]}>
+          <h2 className="PanelTitle">Loading...</h2>
+        </div>
+        <PanelNav before="loading" after="loading" onClickHandler={handleNavClick} />
+        <div className={styles["skeleton-container"]}>
+          <Skeleton count={10} className={styles["skeleton"]} />
+        </div>
+      </div>
+    );
+  };
+
+  if (hasError) {
+    return (
+      <div className={`PanelContainer ${styles["panel-container"]}`}>
+        <div className={styles["header-container"]}>
+          <h2 className="PanelTitle">Cannot load posts</h2>
+        </div>
+      </div>
+    )
   }
   
   return (

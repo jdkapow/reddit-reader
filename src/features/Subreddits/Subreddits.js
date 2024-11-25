@@ -22,7 +22,7 @@ function debounce(fn, ms) {
 };
 
 export default function Subreddits() {
-  const { limit, before, after, subreddits, searchTerm, activeSubreddit } = useSelector(selectSubreddits);
+  const { limit, before, after, subreddits, searchTerm, activeSubreddit, isLoading, hasError } = useSelector(selectSubreddits);
   const dispatch = useDispatch();
 
   const panelHeight = (limit - 1) * 49 + 120;
@@ -66,6 +66,8 @@ export default function Subreddits() {
         subreddits={subreddits} 
         onClearSearchHandler={handleClearSearch}
         onNavHandler={handleNavClick}
+        isLoading={isLoading}
+        hasError={hasError}
       />
       <SubredditsSmall 
         className={styles["subreddits-small"]}
@@ -78,6 +80,8 @@ export default function Subreddits() {
         activeSubreddit={activeSubreddit}
         onClearSearchHandler={handleClearSearch}
         onMoreHandler={handleMoreSelect}
+        isLoading={isLoading}
+        hasError={hasError}
       />
     </div>
   )

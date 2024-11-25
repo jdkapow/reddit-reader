@@ -39,6 +39,8 @@ const commentsSlice = createSlice({
         //of two objects
         //the first object is the post itself--we'll ignore that
         //the second one contains all the comment information
+        state.isLoading = false;
+        state.hasError = false;
         const comments = json[1].data.children;
         state.selectedPostId = postId; 
         state.limit = limit;
