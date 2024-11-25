@@ -36,10 +36,12 @@ export default function Subreddit({subreddit}) {
     if (!(isActive || isPrivate)) {
       dispatch(activateSubreddit({id:id, subreddit:subreddit}));
     }
+    window.scrollTo({top:0,left:0,behavior:"smooth"});
   };
 
   const handleDeactivateSubreddit = () => {
     dispatch(clearActiveSubreddit());
+    window.scrollTo({top:0,left:0,behavior:"smooth"});
   };
   
   return (

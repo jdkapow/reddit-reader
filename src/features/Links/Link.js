@@ -31,7 +31,12 @@ export default function Link ({link, id, titleColor}) {
     <div className={styles["link-container"]}>
       <h3 className={styles["title"]} style={{color:titleColor}} onClick={handleClick}>{title}</h3>
       <p className="CreatedText">Posted by <span style={{color:titleColor}}>{author}</span>{` ${createdText}`}</p>
-      <img className={styles["post-image"]} src={imageDisplay} onError={handleError} style={imageDisplay ? {} : {display:"none"}} />
+      <img className={styles["post-image"]} 
+        src={imageDisplay} 
+        onError={handleError} 
+        style={imageDisplay ? {} : {display:"none"}} 
+        alt="Did not load"
+      />
       <p className={styles["selftext"]}>{selftext}</p>
       <div className={styles["post-info"]}>
         <p className={styles["vote-container"]} style={voteStyle}>

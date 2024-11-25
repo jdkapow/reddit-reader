@@ -14,7 +14,7 @@ function App() {
 
   useEffect( () => {
     dispatch(loadSubreddits({searchTerm:"", limit:getSubredditLimit(), pageChange:null}));
-  },[]);
+  },[dispatch]);
 
   return (
     <div className="App">
